@@ -11,11 +11,13 @@ public class User extends BaseEntity{
 	String passwordHash;
 	String name;
 	String avatar;
+	String email;
 
 	@Column(unique=true)
 	public String getAccount() {
 		return account;
 	}
+	@Column(unique=true,nullable =true)
 	public String getPasswordHash() {
 		return passwordHash;
 	}
@@ -24,6 +26,9 @@ public class User extends BaseEntity{
 	}
 	public String getAvatar() {
 		return avatar;
+	}
+	public String getEmail() {
+		return email;
 	}
 	
 	public void setAccount(String account) {
@@ -38,4 +43,9 @@ public class User extends BaseEntity{
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 }

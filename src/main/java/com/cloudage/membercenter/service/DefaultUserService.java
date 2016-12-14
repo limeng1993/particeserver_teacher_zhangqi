@@ -17,12 +17,18 @@ public class DefaultUserService implements IUserService {
 
 	@Autowired
 	IUserRepository userRepo;
+	public User save(User user)
+	{
+		return userRepo.save(user);
+	}
 	
 	@Override
 	public User create(String account, String passwordHash) {
 		User user = new User();
 		user.setAccount(account);
 		user.setPasswordHash(passwordHash);
+		user.getEmail();
+		user.getName();
 		return userRepo.save(user);
 	}
 
@@ -49,5 +55,24 @@ public class DefaultUserService implements IUserService {
 		// TODO Auto-generated method stub
 
 	}
+	@Override
+
+    public User findByAccount(String account)
+    {
+    	return userRepo.findUserByAccount(account);
+    }
+
+	@Override
+	public User findByID(Integer id) {
+		return userRepo.findOne(id);
+	}
+
+	@Override
+	public User findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return userRepo.findUserByEmail(email)
+				;
+	}
+
 
 }

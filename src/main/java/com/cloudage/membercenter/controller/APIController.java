@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cloudage.membercenter.entity.Article;
 import com.cloudage.membercenter.entity.Review;
 import com.cloudage.membercenter.entity.User;
+import com.cloudage.membercenter.repository.IReviewRepository;
 import com.cloudage.membercenter.service.IArticleService;
 import com.cloudage.membercenter.service.ILikesService;
 import com.cloudage.membercenter.service.IReview;
@@ -80,6 +81,7 @@ public class APIController {
 			if(user!=null&&user.getPasswordHash().equals(passwordHash))
 			{
 				request.getSession().setAttribute("uid", user.getId());
+				request.getSession().setAttribute("uname", user.getName());
 				return user;
 			}
 			else
@@ -210,7 +212,39 @@ public class APIController {
 		 
  		return likesService.countLikes(article_id); 
 		} 
-	 } 
+	  
+	@RequestMapping("/article/s/{keyword}")
+	public Page<Article> searhArticlesWithKeyword(
+			@PathVariable String keyword,
+			@RequestParam(defaultValue ="0") int page)
+	{
+		return articleService.searchTextWithKeyword(keyword,page);
+	}
+	//@RequestMapping("/review/{author_id}")
+	@RequestMapping("/review")
+	public Page<Review> findAllOfReview(
+			@RequestParam(defaultValue="0") int page,
+			HttpServletRequest request)
+	{
+		Object obj=request.getSession().getAttribute("uid");
+		 int author_id = (int)obj;
+		return reviewService.findAllOfReview(author_id, page);
+	}
+	
+	@RequestMapping("/Ireview")
+	public Page<Review> findAllOfMyreview(
+			@RequestParam (defaultValue="0") int page,
+			HttpServletRequest request)
+	{
+		Object obj=request.getSession().getAttribute("uname");
+		String name=(String)obj;
+		return reviewService.findAllOfMyreview(name, page);
+		
+	}
+	
+} 
+
+
 
 	
 				

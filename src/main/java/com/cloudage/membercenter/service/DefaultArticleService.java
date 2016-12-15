@@ -54,4 +54,13 @@ public class DefaultArticleService implements IArticleService{
 		return articleRepo.findOne(article_id);
 	}
 
+	@Override
+	public Page<Article> searchTextWithKeyword(String keyword, int page) {
+		// TODO Auto-generated method stub
+		Sort sort=new Sort(Direction.DESC,"creataDate");
+		PageRequest pageRequest=new PageRequest(page, 5,sort);
+
+		return articleRepo.searchTextWithKeyword(keyword, pageRequest);
+	}
+
 }

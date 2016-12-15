@@ -15,6 +15,7 @@ public interface IArticleService {
 	Article save(Article article);
 	Page<Article> getFeeds(int page);
 	Article findOne(int article_id);
+	Page<Article> searchTextWithKeyword(String keyword, int page);
 	
 
 }
